@@ -1,0 +1,17 @@
+.git
+.gitignore
+.env
+.env.*
+target/
+**/target/
+.idea/
+**/.idea/
+.vscode/
+**/.vscode/
+*.iml
+*.log
+node_modules/
+**/node_modules/
+HELP.md
+Dockerfile
+.dockerignore
