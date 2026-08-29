@@ -1,0 +1,56 @@
+services:
+  server:
+    build:
+      context: ./backend
+      args:
+        APP_VERSION: ${APP_VERSION:-dev}
+    container_name: drachenko-compose-server
+    restart: unless-stopped
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    environment:
+      SERVER_PORT: ${API_PORT}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SPRING_MAIL_HOST: ${SPRING_MAIL_HOST:-}
+      SPRING_MAIL_PORT: ${SPRING_MAIL_PORT:-587}
+      SPRING_MAIL_USERNAME: ${SPRING_MAIL_USERNAME:-}
+      SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD:-}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH:-false}
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE:-false}
+      APP_REPORTS_DEFAULT_EMAILS: ${APP_REPORTS_DEFAULT_EMAILS:-}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend-net
+
+  db:
+    image: postgres:16-alpine
+    container_name: drachenko-db
+    restart: unless-stopped
+    command: ["-p", "${DB_PORT}"]
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_NAME} -p ${DB_PORT}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend-net
+    # No "ports:" — never publish the database on shared host VM
+
+networks:
+  backend-net:
+    driver: bridge
+
+volumes:
+  db-data:

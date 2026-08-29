@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: DeeployRKD
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:drachenko_app}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
   mail:
     host: ${SPRING_MAIL_HOST:localhost}
     port: ${SPRING_MAIL_PORT:587}
@@ -23,3 +27,4 @@ app:
   reports:
     default-emails: ${APP_REPORTS_DEFAULT_EMAILS:ceo@example.com}
     seed-initial-data: true
+
