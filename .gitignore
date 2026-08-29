@@ -1,6 +1,4 @@
-# ==========================================
 # Backend (Java / Spring Boot / Maven)
-# ==========================================
 target/
 *.class
 *.jar
@@ -16,9 +14,7 @@ HELP.md
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# ==========================================
 # Frontend (Node / React / Vite)
-# ==========================================
 node_modules/
 dist/
 build/
@@ -34,17 +30,13 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# ==========================================
 # Environment variables (Secrets)
-# ==========================================
 .env
 .env.*
 !.env.example
 !.env.*.example
 
-# ==========================================
 # IDEs, Editors & Tools
-# ==========================================
 # IntelliJ IDEA
 .idea/
 *.iws
@@ -72,9 +64,7 @@ pnpm-debug.log*
 /nbdist/
 /.nb-gradle/
 
-# ==========================================
 # OS Files & Local Docs
-# ==========================================
 .DS_Store
 Thumbs.db
 pz-12.md
